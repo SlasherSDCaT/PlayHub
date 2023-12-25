@@ -2,12 +2,16 @@ from typing import List, Tuple
 
 from fastapi import APIRouter, Depends
 from fastapi import HTTPException
+from fastapi.openapi.models import Response
 from sqlalchemy.orm import Session
+from openpyxl import Workbook
+from io import BytesIO
 
 from app.database import SessionLocal
 from app.models.PlayerAward import PlayerAward
 from app.models.award import Award as AwardModel
 from app.models.player import Player as PlayerModel
+from ..models.TeamGame import TeamGame
 from ..models.game import Game as GameModel
 from ..models.team import Team as TeamModel
 from app.schemas.award import Award
@@ -158,6 +162,15 @@ def set_player_game(player_id: int, game_id: int, db: Session = Depends(get_db))
         old_game_id = player.game_id
 
         player.game_id = game_id if game_id != 0 else None
+
+        if player.team_id and game_id:  # Если у игрока есть команда и он присоединяется к игре
+            # Проверяем, существует ли уже запись в таблице TeamGame
+            existing_entry = db.query(TeamGame).filter_by(team_id=player.team_id, game_id=game_id).first()
+
+            if not existing_entry:  # Если записи нет, добавляем её
+                team_game_entry = TeamGame(team_id=player.team_id, game_id=game_id)
+                db.add(team_game_entry)
+
         db.commit()
 
         if old_game_id is not None:

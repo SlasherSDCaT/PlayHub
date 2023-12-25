@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Pagination, Container, DropdownButton, Dropdown, ButtonGroup } from "react-bootstrap";
+import {Table, Pagination, Container, DropdownButton, Dropdown, ButtonGroup, Button} from "react-bootstrap";
+import DownloadFile from "./downloadFile";
 
 const Player = () => {
     const [players, setPlayers] = useState([]);
@@ -47,14 +48,16 @@ const Player = () => {
                 <h3>Loading...</h3>
             ) : (
                 <>
-                    <DropdownButton as={ButtonGroup} title={"Количество элементов - " + limit} id="dropdown-primary" className="mb-3">
+                    <DropdownButton as={ButtonGroup} title={"Количество элементов - " + limit} id="dropdown-primary" className="m-lg-2">
                         <Dropdown.Item onClick={() => handleLimitChange(2)}>2</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleLimitChange(5)}>5</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleLimitChange(10)}>10</Dropdown.Item>
                     </DropdownButton>
+                    <DownloadFile curUrl={"players"}/>
+
                     <h1>Список игроков</h1>
                     <h5>Всего игроков: {totalPlayer}</h5>
-                    <Table striped bordered hover>
+                    <Table striped bordered hover id="my-table">
                         <thead>
                         <tr>
                             <th>#</th>

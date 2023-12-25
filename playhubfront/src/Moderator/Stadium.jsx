@@ -8,6 +8,7 @@ import {
     Form,
     Container, DropdownButton, ButtonGroup, Pagination
 } from "react-bootstrap";
+import DownloadFile from "./downloadFile";
 
 const Stadiums = () => {
     const [stadiums, setStadiums] = useState([]);
@@ -120,6 +121,7 @@ const Stadiums = () => {
                         <Dropdown.Item onClick={() => handleLimitChange(5)}>5</Dropdown.Item>
                         <Dropdown.Item onClick={() => handleLimitChange(10)}>10</Dropdown.Item>
                     </DropdownButton>
+                    <DownloadFile curUrl={"stadium"}/>
                     <Table striped bordered hover>
                         <thead>
                         <tr>

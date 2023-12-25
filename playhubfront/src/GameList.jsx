@@ -87,6 +87,7 @@ export default function GameList({ stadium_id }) {
                         <th>Дата начала</th>
                         <th>Дата окончания</th>
                         <th>Количество участников</th>
+                        <th>Команды участники</th>
                         <th>Присоединиться к игре</th>
                         {userData && userData.role === 'moderator' && <th>Удалить игру</th>}
                     </tr>
@@ -100,13 +101,18 @@ export default function GameList({ stadium_id }) {
                             <td>{formatDateTime(game.start_time)}</td>
                             <td>{formatDateTime(game.end_time)}</td>
                             <td>{game.count_participant}</td>
+                            <td><ul>{
+                                game.teams.map((team, index) => (
+                                    <li key={index}>{team}</li>
+                                ))
+                            }</ul></td>
                             <td>
                                 {userData && userData.game_id === game.id ? (
                                     <>
-                                        <Button variant="success" disabled>
+                                        <Button variant="success" className="m-lg-1" disabled>
                                             Вы записаны
                                         </Button>
-                                        <Button variant="danger" onClick={() => handleJoinGame(0)}>
+                                        <Button variant="danger" className="m-lg-1" onClick={() => handleJoinGame(0)}>
                                             Отписаться
                                         </Button>
                                     </>

@@ -32,6 +32,13 @@ CREATE TABLE IF NOT EXISTS game (
     stadium_id bigint references stadium not null
 );
 
+CREATE TABLE IF NOT EXISTS team_game
+(
+  team_id bigint references team,
+  game_id bigint references game,
+  primary key (team_id, game_id)
+);
+
 --пользователь
 CREATE TABLE IF NOT EXISTS player (
     id bigint generated always as identity primary key,

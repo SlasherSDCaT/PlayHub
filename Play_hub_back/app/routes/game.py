@@ -1,8 +1,11 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import and_, or_
 from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
+from app.models.TeamGame import TeamGame
 from app.models.game import Game as GameModel
 from app.schemas.game import GameCreate, Game
 
@@ -43,9 +46,15 @@ def create_game(game: GameCreate, db: Session = Depends(get_db)):
     return db_game
 
 
-@router.get("/game/{stadium_id}", response_model=list[Game])
+@router.get("/game/{stadium_id}", response_model=List[Game])
 def get_games_by_stadium(stadium_id: int, db: Session = Depends(get_db)):
     games = db.query(GameModel).filter(GameModel.stadium_id == stadium_id).all()
+
+    for game in games:
+        team_game_entries = db.query(TeamGame).filter(TeamGame.game_id == game.id).all()
+        teams = [entry.team.name for entry in team_game_entries]
+        game.teams = teams
+
     return games
 
 

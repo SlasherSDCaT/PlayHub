@@ -11,6 +11,7 @@ import {
     Modal,
     Form
 } from "react-bootstrap";
+import DownloadFile from "./downloadFile";
 
 const Sports = () => {
     const [awards, setAwards] = useState([]);
@@ -101,6 +102,7 @@ const Sports = () => {
                         <Dropdown.Item onClick={() => handleLimitChange(10)}>10</Dropdown.Item>
                     </DropdownButton>
                     <Button variant="primary" onClick={() => setShowModal(true)} className="mb-3 m-lg-2">Добавить спорт</Button>
+                    <DownloadFile curUrl={"sports"}/>
 
                     <Table striped bordered hover>
                         <thead>

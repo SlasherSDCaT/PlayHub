@@ -1,5 +1,9 @@
 from datetime import datetime
+from typing import List
+
 from pydantic import BaseModel
+
+from app.schemas.team import TeamCreate
 
 
 class GameBase(BaseModel):
@@ -21,6 +25,7 @@ class GameCreate(BaseModel):
 
 class Game(GameBase):
     id: int
+    teams: List[str] = []
 
     class Config:
         orm_mode = True

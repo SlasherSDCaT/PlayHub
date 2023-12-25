@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -18,3 +18,5 @@ class Game(Base):
 
     stadiums = relationship("Stadium", back_populates="game")
     players = relationship("Player", back_populates="game")
+    team_game = relationship("TeamGame", back_populates="game")
+    team = relationship("Team", secondary="team_game")
