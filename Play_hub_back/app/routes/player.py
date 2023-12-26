@@ -4,8 +4,6 @@ from fastapi import APIRouter, Depends
 from fastapi import HTTPException
 from fastapi.openapi.models import Response
 from sqlalchemy.orm import Session
-from openpyxl import Workbook
-from io import BytesIO
 
 from app.database import SessionLocal
 from app.models.PlayerAward import PlayerAward
